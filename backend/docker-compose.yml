@@ -1,0 +1,35 @@
+services:
+    frontend:
+        build:
+            context: ./client
+            args:
+                NODE_PLATFORM: ${PLATFORM}
+        restart: always
+        image: "vardhanv52/wfms-frontend:${ENV}"
+        container_name: frontend
+        ports:
+            - ${FRONTEND_PORT}:4200
+        networks:
+            - WFMS-Network
+    backend:
+        build:
+            context: ./backend
+            args:
+                NODE_PLATFORM: ${PLATFORM}
+        image: "vardhanv52/wfms-api:${ENV}"
+        container_name: backend
+        restart: always
+        ports:
+            - ${BACKEND_PORT}:2000
+            - ${BACKEND_PORT_HTTPS}:${BACKEND_PORT_HTTPS}
+        env_file:
+            - .env
+        volumes:
+            - ${FOLDER_ROOT}:/wfms/../wfms-data
+        networks:
+            - WFMS-Network
+
+networks:
+    WFMS-Network:
+        name: "wfms-network"
+        driver: bridge

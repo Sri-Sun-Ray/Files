@@ -1,0 +1,32 @@
+services:
+
+  rabbitmq:
+
+    image: ${PLATFORM}/rabbitmq:3.11.10-management
+
+    container_name: rabbitmq
+
+    restart: always
+
+    environment:
+
+      RABBITMQ_DEFAULT_USER: ${RMQ_USERNAME}
+
+      RABBITMQ_DEFAULT_PASS: ${RMQ_PASSWORD}
+
+    volumes:
+
+      - ${FOLDER_ROOT}/rabbitmq/data:/var/lib/rabbitmq/
+
+      - ${FOLDER_ROOT}/rabbitmq/logs:/var/log/rabbitmq/
+
+    ports:
+
+      - ${RMQ_MSG_PORT}:5672
+
+      - ${RMQ_UI_PORT}:15672
+
+
+
+
+

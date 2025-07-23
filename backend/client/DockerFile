@@ -1,0 +1,18 @@
+# Declare build args
+ARG NODE_PLATFORM
+
+# FROM ${NODE_PLATFORM}/node:18
+FROM --platform=${NODE_PLATFORM} node:18
+
+# Working Directory
+WORKDIR /wfms-frontend
+
+# Copy Src files
+COPY . . 
+
+RUN npm i pm2 --location=global
+
+# Expose the port
+EXPOSE 4200
+
+CMD ["./start_app.sh"]
